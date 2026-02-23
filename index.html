@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>LIMCOMA</title>
+    <style>
+        /* Background photo instead of video */
+        body {
+            background-image: url('building.jpg'); /* Your image file */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            /* EFFECT: Smooth Fade-in for the whole body */
+            animation: fadeInPage 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInPage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Diagonal Fade Overlay design */
+        .fade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 60%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Typing effect styling */
+        #typing-effect {
+            font-size: 4rem; /* Adjusted to match LIMCOMA photo size */
+            font-weight: 800;
+            margin-top: 40px;
+            color: #1b4332; /* LIMCOMA Green */
+            text-align: left;
+            padding-left: 10%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main text overlay */
+        main div {
+            font-size: 1.1rem;
+            margin-top: 15px;
+            line-height: 1.6;
+            text-align: left;
+            padding-left: 10%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer styling */
+        footer {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        /* Center header navigation */
+        header nav {
+            margin: 0 auto;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        
+        header nav a {
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* NEW: Our Blueprint Button from photo */
+        .btn-blueprint {
+            background-color: #1b4332;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 25px;
+            margin-left: 10%;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .btn-blueprint:hover {
+            background-color: #2d6a4f;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="fade-overlay"></div>
+
+    <header class="d-flex justify-content-center align-items-center text-white">
+        <div class="logo mr-4">
+            <img src="Hive Logo.png" alt="Logo" class="logo-img" style="height:50px;">
+        </div>
+        <nav class="d-flex">
+            <a href="#" class="nav-link text-white">Home</a>
+            <a href="#" class="nav-link text-white">Products</a>
+            <a href="#" class="nav-link text-white">Loans</a>
+            <a href="#" class="nav-link text-white">Membership</a>
+            <a href="#" class="nav-link text-white">About Us</a>
+        </nav>
+    </header>
+    
+    <main class="mt-5 text-white" id="main-content">
+        <h1 id="typing-effect"></h1>
+        <div style="text-align: left;">
+            <div>Welcome to Hive Hotel, your top booking platform for memorable visits where you can find the easiest method</div>
+            <div>to locate and book the ideal lodging for your trip. Discovering new places has never been simpler than with</div>
+            <div>Hive Hotel as you savor customized options, instant availability, and exclusive deals tailored just for you.</div>
+            <div>While enjoying luxurious accommodations with unique amenities, so begin your adventure now with us!</div>
+            
+            <a href="#" class="btn-blueprint">Our Blueprint <i class="fas fa-chevron-right ml-2"></i></a>
+        </div>
+    </main>
+
+    <footer class="text-center mt-5 p-3 text-white">
+        <div class="d-flex justify-content-between align-items-center flex-wrap">
+            <div class="text-white mb-2">
+                <a href="#" class="text-white" aria-label="Privacy Policy">
+                    <i class="fas fa-shield-alt"></i> Privacy Policy
+                </a>
+                <span>|</span>
+                <a href="#" class="text-white" aria-label="Terms of Service">
+                    <i class="fas fa-file-contract"></i> Terms of Service
+                </a>
+                <span>|</span>
+                <a href="#" class="text-white" aria-label="FAQs">
+                    <i class="fas fa-question-circle"></i> FAQs
+                </a>
+            </div>                                         
+            <div class="text-white mb-2">
+                Follow us on:
+                <a href="#" class="text-white" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="text-white" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="text-white" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>                      
+            <div class="text-white mb-2">
+                <a href="mailto:info@hivehotel.com" class="text-white" aria-label="Email">
+                    <i class="fas fa-envelope"></i> info@hivehotel.com
+                </a>
+                <span>|</span>
+                <a href="tel:+639175813189" class="text-white" aria-label="Phone">
+                    <i class="fas fa-phone-alt"></i> (+63) 917 581 3189
+                </a>
+            </div>                
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
