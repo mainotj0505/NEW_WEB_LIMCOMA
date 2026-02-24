@@ -26,19 +26,6 @@
             to { opacity: 1; }
         }
 
-
-        /* Typing effect styling */
-        #typing-effect {
-            font-size: 4rem; /* Adjusted to match LIMCOMA photo size */
-            font-weight: 800;
-            margin-top: 40px;
-            color: #1b4332; /* LIMCOMA Green */
-            text-align: left;
-            padding-left: 10%;
-            position: relative;
-            z-index: 1;
-        }
-
         /* Main text overlay */
         main div {
             font-size: 1.1rem;
@@ -69,7 +56,6 @@
             font-weight: bold;
             font-size: 0.85rem;
         }
-
     </style>
 </head>
 <body>
@@ -98,19 +84,54 @@
     </header>
     
     <main id="main-content">
-        <div class="hero-container">
-            <h1 id="typing-effect"></h1>
-            
-            <p class="hero-description">
-                “Providing Quality Animal Feeds, Accessible Financial Support,
-                 and a Strong Cooperative Community for Sustainable Growth.”
-            </p>
-            
-            <div class="hero-buttons">
-                <a href="#" class="btn-primary-custom">Our Projects</a>
-                <a href="#" class="btn-outline-custom">Contact Us</a>
+
+        <!-- ============== SECTION 1 (EXISTING HERO) ============== -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <h1 id="typing-effect">LIMCOMA MULTI-PURPOSE COOPERATIVE</h1>
+                
+                <p class="hero-description">
+                    “Providing Quality Animal Feeds, Accessible Financial Support,
+                     and a Strong Cooperative Community for Sustainable Growth.”
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#" class="btn-primary-custom">Our Projects</a>
+                    <a href="#" class="btn-outline-custom">Contact Us</a>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- ============== SECTION 2 (ADDED, BASED ON UPLOADED PHOTO) ============== -->
+        <section class="about-section reveal-on-scroll" id="about">
+            <div class="about-wrap container">
+                <div class="about-left">
+                    <p class="about-kicker">ABOUT LIMCOMA</p>
+                    <h2 class="about-title">A Partner in Your Farming Success</h2>
+                    <p class="about-text">
+                        LIMCOMA is a multipurpose cooperative dedicated to uplifting the lives of Filipino farmers.
+                        We provide top-tier animal feeds formulated for optimal growth and financial solutions tailored
+                        to the unique cycles of agriculture.
+                    </p>
+
+                    <ul class="about-list">
+                        <li><span class="about-check"><i class="fas fa-check"></i></span> Farmer-owned and operated cooperative</li>
+                        <li><span class="about-check"><i class="fas fa-check"></i></span> High-quality, affordable feed production</li>
+                        <li><span class="about-check"><i class="fas fa-check"></i></span> Low-interest agricultural loans</li>
+                    </ul>
+
+                    <a href="#" class="about-btn">Learn More About Us</a>
+                </div>
+
+                <div class="about-right">
+                    <!-- Replace this image with your preferred about photo -->
+                    <div class="about-image-frame">
+                        <img src="images/about-farmers.jpg" alt="LIMCOMA Community" class="about-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="text-center p-3 text-white">

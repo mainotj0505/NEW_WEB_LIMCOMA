@@ -1,10 +1,11 @@
-const text = "LIMCOMA MULTI-PURPOSE COOPERATIVE";
 const typingSpeed = 100; 
 const typingElement = document.getElementById("typing-effect");
 
 function typeWriter(text, element, speed) {
     let i = 0;
     element.textContent = ""; 
+    element.style.whiteSpace = "pre-line";
+
     function type() {
         if (i < text.length) {
             element.textContent += text.charAt(i);
@@ -73,7 +74,35 @@ window.addEventListener("DOMContentLoaded", () => {
         document.body.prepend(bgContainer);
     }
 
-    setTimeout(() => {
-        typeWriter(text, typingElement, typingSpeed);
-    }, 1200);
+    // ADDED: entry animation trigger for the title + quote
+    const hero = document.querySelector('.hero-container');
+    if (hero) {
+        // small delay so CSS animations always trigger smoothly
+        setTimeout(() => hero.classList.add('enter'), 120);
+    }
+
+    /* ✅ ADDED: typing effect call (so the typing actually runs) */
+    if (typingElement) {
+        setTimeout(() => {
+            typeWriter("LIMCOMA MULTI-PURPOSE COOPERATIVE", typingElement, typingSpeed);
+        }, 550);
+    }
+
+    /* ✅ ADDED: reveal-on-scroll for second section */
+    const revealItems = document.querySelectorAll('.reveal-on-scroll');
+    if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    io.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.18 });
+
+        revealItems.forEach(el => io.observe(el));
+    } else {
+        // fallback: just show
+        revealItems.forEach(el => el.classList.add('in-view'));
+    }
 });

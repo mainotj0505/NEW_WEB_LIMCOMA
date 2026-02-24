@@ -13,7 +13,11 @@ html, body {
     flex-direction: column;
     height: 100%;
     margin: 0;
-    overflow: hidden; 
+
+    /* ✅ CHANGED: make scrollable (your old overflow:hidden prevents scrolling) */
+    overflow-x: hidden;
+    overflow-y: auto;
+
     background-color: #000;
 }
 
@@ -54,7 +58,6 @@ html, body {
 
 /* Navigation - UPDATED TRANSPARENCY AND COLOR */
 header {
-    /* Color: Deep Blue with 0.7 transparency */
     background-color: rgba(6, 18, 48, 0.7); 
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -65,7 +68,7 @@ header {
     transform: translateX(-50%);
     z-index: 1000;
     width: 95%; 
-    max-width: 3000px; /* Restored to a more standard length, adjust as needed */
+    max-width: 3000px;
     border-radius: 100px;
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -81,15 +84,17 @@ header nav a {
     font-weight: 600;
     font-size: 0.50rem;
     color: #ffffff !important;
-    text-transform: uppercase, lowercase;
+
+    /* ✅ FIXED: this was invalid CSS: "uppercase, lowercase" */
+    text-transform: uppercase;
+
     letter-spacing: 1px;
     margin: 0 15px; 
     transition: all 0.3s ease;
-   
 }
 
 header nav a:hover {
-    color: #8b9fa5 !important; /* Lighter blue hover effect */
+    color: #8b9fa5 !important;
     text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
 }
 
@@ -98,9 +103,21 @@ main {
     position: relative;
     z-index: 10;
     flex: 1;
+
+    /* ✅ ADDED: multiple sections support */
+    display: block;
+
+    /* give space for fixed header */
+    padding-top: 110px;
+}
+
+/* ============== SECTION 1 (HERO) ============== */
+.hero-section{
+    min-height: calc(100vh - 110px);
     display: flex;
     align-items: center;
-    padding-left: 5%;
+    padding-left: 3%;
+    padding-right: 3%;
 }
 
 .hero-container {
@@ -108,16 +125,19 @@ main {
     animation: slideUpContent 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
 }
 
+/* Title */
 #typing-effect {
     font-family: var(--headline-font);
-    font-size: 5rem;
+    font-size: 4.2rem;
     font-weight: 800;
     color: var(--primary-green);
     line-height: 1.05;
     margin-bottom: 25px;
     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05));
+    max-width: 520px;
 }
 
+/* Quote */
 .hero-description {
     font-family: var(--body-font);
     font-size: 1.15rem;
@@ -153,6 +173,11 @@ main {
 .btn-primary-custom:hover { background: var(--accent-green); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(27, 67, 50, 0.3); color: white; }
 .btn-outline-custom:hover { background: var(--primary-green); color: white; transform: translateY(-5px); }
 
+@keyframes slideUpContent {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 /* Footer */
 footer {
     position: relative;
@@ -160,17 +185,6 @@ footer {
     background: #061230;
     padding: 25px 0;
 }
-
-@keyframes slideUpContent {
-    from { transform: translateY(50px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-/* Smoke Animation */
-.smoke-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
-.smoke-layer { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%); filter: blur(60px); animation: drift 30s linear infinite; }
-@keyframes drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
 
 footer {
     background: rgba(10, 35, 70, 0.95);
@@ -188,9 +202,35 @@ footer {
 }
 
 /* =========================
+   ENTRY EFFECTS (TITLE + QUOTE)
+========================= */
+.hero-container #typing-effect,
+.hero-container .hero-description {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+.hero-container.enter #typing-effect {
+    animation: titlePopIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-container.enter .hero-description {
+    animation: quoteFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards;
+}
+
+@keyframes titlePopIn {
+    0% { opacity: 0; transform: translateY(18px) scale(0.98); filter: blur(1px); }
+    100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@keyframes quoteFadeIn {
+    0% { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
    LINK INTERACTION
 ========================= */
-
 footer a {
     color: #ffffff;
     text-decoration: none;
@@ -200,13 +240,11 @@ footer a {
         color 0.2s ease;
 }
 
-/* Desktop hover */
 footer a:hover {
     opacity: 0.85;
     transform: translateY(-2px);
 }
 
-/* Mobile tap */
 footer a:active {
     transform: scale(0.95);
     opacity: 0.75;
@@ -215,7 +253,6 @@ footer a:active {
 /* =========================
    SOCIAL ICON ANIMATION
 ========================= */
-
 .social-links a i {
     transition: transform 0.25s ease;
 }
@@ -231,9 +268,288 @@ footer a:active {
 /* =========================
    MOBILE OPTIMIZATION
 ========================= */
-
 @media (hover: none) and (pointer: coarse) {
     footer a:hover {
         transform: none;
+    }
+}
+
+#typing-effect {
+    font-size: 2.1rem !important;
+    line-height: 1.12 !important;
+    max-width: 620px !important;
+    white-space: normal !important;
+    padding-left: 0 !important;
+}
+
+.hero-container {
+    position: relative !important;
+    left: 2% !important;
+    padding-left: 0 !important;
+}
+
+/* Safe to keep even if already imported elsewhere */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+
+/* Header glass gradient + depth */
+header{
+    background: linear-gradient(
+        135deg,
+        rgba(6, 18, 48, 0.88) 0%,
+        rgba(10, 35, 70, 0.65) 45%,
+        rgba(6, 18, 48, 0.82) 100%
+    ) !important;
+
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.45),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
+
+    overflow: hidden;
+}
+
+/* Soft highlight sheen across the pill */
+header::before{
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at 20% 10%,
+        rgba(255,255,255,0.18) 0%,
+        rgba(255,255,255,0.05) 25%,
+        transparent 60%
+    );
+    pointer-events: none;
+    opacity: 0.9;
+}
+
+/* Animated accent line under header */
+header::after{
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(76, 201, 240, 0.55) 20%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(76, 201, 240, 0.55) 80%,
+        transparent 100%
+    );
+    filter: blur(0.2px);
+    opacity: 0.9;
+    pointer-events: none;
+    animation: headerAccentSweep 3.8s ease-in-out infinite;
+}
+
+@keyframes headerAccentSweep{
+    0%   { transform: translateX(-6%); opacity: 0.65; }
+    50%  { transform: translateX(6%);  opacity: 1; }
+    100% { transform: translateX(-6%); opacity: 0.65; }
+}
+
+/* Keep nav above pseudo-elements */
+header nav{
+    position: relative;
+    z-index: 2;
+}
+
+/* Nav link: better font + spacing + underline animation */
+header nav a{
+    font-family: 'Montserrat', sans-serif !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase !important;
+
+    padding: 10px 12px !important;
+    border-radius: 999px;
+    position: relative;
+    isolation: isolate;
+}
+
+/* Underline slider */
+header nav a::after{
+    content: "";
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 6px;
+    height: 2px;
+    border-radius: 99px;
+    background: linear-gradient(
+        90deg,
+        rgba(76, 201, 240, 0) 0%,
+        rgba(76, 201, 240, 0.75) 50%,
+        rgba(76, 201, 240, 0) 100%
+    );
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity: 0.9;
+}
+
+/* Hover: glow + underline + soft background */
+header nav a:hover{
+    background: rgba(255, 255, 255, 0.06);
+    transform: translateY(-1px);
+    color: #eaf6ff !important;
+    text-shadow: 0 0 12px rgba(76, 201, 240, 0.45);
+}
+
+header nav a:hover::after{
+    transform: scaleX(1);
+}
+
+/* Active press */
+header nav a:active{
+    transform: translateY(0) scale(0.98);
+    opacity: 0.92;
+}
+
+/* Small screens: reduce spacing */
+@media (max-width: 768px){
+    header{
+        padding: 6px 14px !important;
+    }
+    header nav a{
+        font-size: 0.68rem !important;
+        letter-spacing: 1.5px !important;
+        margin: 0 6px !important;
+        padding: 8px 10px !important;
+    }
+}
+
+/* =========================================================
+   ✅ ADDED: SECTION 2 STYLES (MATCHES UPLOADED PHOTO)
+========================================================= */
+
+.about-section{
+    background: rgba(255,255,255,0.96);
+    position: relative;
+    z-index: 10;
+    padding: 150px 0;
+    margin-top: 40px;
+}
+
+.about-wrap{
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.about-kicker{
+    font-size: 0.7rem;
+    letter-spacing: 1.6px;
+    font-weight: 700;
+    color: rgba(6, 18, 48, 0.65);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.about-title{
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 14px;
+    color: #0f172a;
+}
+
+.about-text{
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: rgba(15, 23, 42, 0.75);
+    margin-bottom: 18px;
+    max-width: 520px;
+}
+
+.about-list{
+    list-style: none;
+    padding: 0;
+    margin: 0 0 22px 0;
+    display: grid;
+    gap: 10px;
+}
+
+.about-list li{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(15, 23, 42, 0.8);
+    font-size: 0.95rem;
+}
+
+.about-check{
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(27, 67, 50, 0.10);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-green);
+    flex: 0 0 22px;
+    font-size: 0.75rem;
+}
+
+.about-btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border: 1px solid rgba(15, 23, 42, 0.10);
+    background: #ffffff;
+    color: rgba(15, 23, 42, 0.85);
+    text-decoration: none !important;
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.about-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 18px 45px rgba(2, 6, 23, 0.12);
+}
+
+.about-image-frame{
+    width: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 25px 55px rgba(2, 6, 23, 0.16);
+    border: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.about-image{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* ✅ Reveal-on-scroll animation */
+.reveal-on-scroll{
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.in-view{
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 992px){
+    .about-wrap{
+        grid-template-columns: 1fr;
+    }
+    .about-title{
+        font-size: 1.9rem;
     }
 }
