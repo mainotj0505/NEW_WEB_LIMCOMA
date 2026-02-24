@@ -1,72 +1,164 @@
-/* Import Google Fonts for aesthetic header */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+/* Typography & Variables */
+:root {
+    --headline-font: 'Montserrat', serif;
+    --body-font: 'Source Sans 3', sans-serif;
+    --primary-green: #1b4332;
+    --accent-green: #2d6a4f;
+}
 
 html, body {
-    font-family: Arial, sans-serif;
-    color: white;
+    font-family: var(--body-font);
+    color: #333;
     display: flex;
     flex-direction: column;
     height: 100%;
     margin: 0;
-    overflow-x: hidden;
+    overflow: hidden; 
+    background-color: #000;
 }
 
-.video-background {
+/* --- AUTOMATIC BACKGROUND MOVEMENT (Ken Burns Effect) --- */
+.bg-zoom-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     z-index: -1;
+    overflow: hidden;
 }
 
-/* Updated Floating header to match the uploaded design (Pill shape) */
+.bg-zoom-container::after {
+    content: "";
+    position: absolute;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-image: url('images/LMCM BLDG.jpg');
+    background-size: cover;
+    background-position: center;
+    animation: kenBurns 10s ease-in-out infinite alternate;
+}
+
+@keyframes kenBurns {
+    0% { transform: scale(1) translate(0, 0); }
+    50% { transform: scale(1.1) translate(-1%, -1%); }
+    100% { transform: scale(1.05) translate(1%, 1%); }
+}
+
+/* Background Overlays */
+#particle-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+.grain-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://grainy-gradients.vercel.app/noise.svg'); opacity: 0.05; pointer-events: none; z-index: 3; }
+.geometric-overlay { position: fixed; top: 0; left: 0; width: 65%; height: 100%; background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0) 100%); clip-path: ellipse(85% 90% at 0% 50%); z-index: 4; }
+
+/* Navigation - UPDATED TRANSPARENCY AND COLOR */
 header {
-    background-color: rgba(255, 255, 255, 0.15); /* Glass look */
-    backdrop-filter: blur(15px);
-    padding: 8px 60px;
+    /* Color: Deep Blue with 0.7 transparency */
+    background-color: rgba(6, 18, 48, 0.7); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2px 25px; 
     position: fixed;
-    top: 20px;
+    top: 15px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
-    width: 90%;
-    max-width: 1400px;
-    border-radius: 50px;
-    border: 1px solid rgba(255,255,255,0.2);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* EFFECT: Slide down on entry */
-    animation: slideDownHeader 1s ease-out forwards;
+    width: 95%; 
+    max-width: 3000px; /* Restored to a more standard length, adjust as needed */
+    border-radius: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    animation: slideDownHeader 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes slideDownHeader {
-    from { transform: translate(-50%, -100px); opacity: 0; }
-    to { transform: translate(-50%, 0); opacity: 1; }
+    from { transform: translate(-50%, -150%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 0.8; }
 }
 
 header nav a {
-    font-family: 'Montserrat', sans-serif;
     font-weight: 600;
+    font-size: 0.50rem;
+    color: #ffffff !important;
+    text-transform: uppercase, lowercase;
     letter-spacing: 1px;
-    font-size: 0.9rem;
-    margin: 0 15px;
-    transition: color 0.3s ease, transform 0.3s ease;
+    margin: 0 15px; 
+    transition: all 0.3s ease;
+   
 }
 
 header nav a:hover {
-    color: #1b4332;
-    transform: scale(1.1);
+    color: #8b9fa5 !important; /* Lighter blue hover effect */
+    text-shadow: 0 0 10px rgba(76, 201, 240, 0.5);
 }
 
+/* Main Content */
 main {
-    flex: 10;
-    padding-top: 120px;
-    /* EFFECT: Slide up the content */
-    animation: slideUpContent 1.2s ease-out 0.5s both;
+    position: relative;
+    z-index: 10;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+}
+
+.hero-container {
+    max-width: 650px;
+    animation: slideUpContent 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+}
+
+#typing-effect {
+    font-family: var(--headline-font);
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--primary-green);
+    line-height: 1.05;
+    margin-bottom: 25px;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05));
+}
+
+.hero-description {
+    font-family: var(--body-font);
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: #222;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    border-left: 3px solid var(--primary-green);
+    padding-left: 25px;
+}
+
+/* Buttons */
+.hero-buttons { display: flex; gap: 15px; }
+.btn-primary-custom, .btn-outline-custom {
+    padding: 16px 38px;
+    border-radius: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.75rem;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    text-decoration: none !important;
+}
+
+.button:active {
+    transform: scale(0.96);
+    opacity: 0.8;
+}
+
+.btn-primary-custom { background: var(--primary-green); color: white; box-shadow: 0 10px 20px rgba(27, 67, 50, 0.2); }
+.btn-outline-custom { border: 1px solid var(--primary-green); color: var(--primary-green); }
+
+.btn-primary-custom:hover { background: var(--accent-green); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(27, 67, 50, 0.3); color: white; }
+.btn-outline-custom:hover { background: var(--primary-green); color: white; transform: translateY(-5px); }
+
+/* Footer */
+footer {
+    position: relative;
+    z-index: 10;
+    background: #061230;
+    padding: 25px 0;
 }
 
 @keyframes slideUpContent {
@@ -74,49 +166,74 @@ main {
     to { transform: translateY(0); opacity: 1; }
 }
 
+/* Smoke Animation */
+.smoke-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.smoke-layer { position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%); filter: blur(60px); animation: drift 30s linear infinite; }
+@keyframes drift { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+
 footer {
-    background-color: rgba(27, 67, 50, 0.9); /* Dark Green footer to match photo */
-    backdrop-filter: blur(5px);
-    color: white;
-    text-align: center;
-    padding: 1.5rem;
+    background: rgba(10, 35, 70, 0.95);
+    animation: footerReveal 1s ease-out forwards;
+    opacity: 0;
+    transform: translateY(40px);
 }
 
-.logo {
-    margin-left: 20px;
+/* Smooth slide-up + fade */
+@keyframes footerReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-h1 {
-    margin: 20px 0;
+/* =========================
+   LINK INTERACTION
+========================= */
+
+footer a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: 
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        color 0.2s ease;
 }
 
-p {
-    margin-bottom: 20px;
+/* Desktop hover */
+footer a:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
 }
 
-.social-signin, .social-signup {
-    margin-top: 10px;
+/* Mobile tap */
+footer a:active {
+    transform: scale(0.95);
+    opacity: 0.75;
 }
 
-.btn-light {
-    background-color: #4d4d4d;
-    color: white;
+/* =========================
+   SOCIAL ICON ANIMATION
+========================= */
+
+.social-links a i {
+    transition: transform 0.25s ease;
 }
 
-.btn-secondary {
-    background-color: #666666;
-    color: white;
+.social-links a:hover i {
+    transform: scale(1.3) rotate(5deg);
 }
 
-.text-muted {
-    color: #cccccc;
+.social-links a:active i {
+    transform: scale(1.15);
 }
 
-.logo-img {
-    max-width: 90px;
-    height: 50px;
-}
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
 
-.text-white a {
-    margin: 0 10px;
+@media (hover: none) and (pointer: coarse) {
+    footer a:hover {
+        transform: none;
+    }
 }
